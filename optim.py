@@ -376,7 +376,7 @@ class CAME(torch.optim.Optimizer):
 
 
 # Define the Lion Optimizer class
-class Lion_singlescale(Optimizer):
+class Lion(Optimizer):
     r"""Implements Lion algorithm."""
 
     def __init__(self, params, lr=1e-4, betas=(0.95, 0.98), scaling = None, weight_decay=0.0, nesterov_momentum = 0):
