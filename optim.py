@@ -564,7 +564,6 @@ class Adafactor(Optimizer):
         relative_step=True,
         warmup_init=False,
     ):
-        require_version("torch>=1.5.0")  # add_ with alpha
         if lr is not None and relative_step:
             raise ValueError("Cannot combine manual `lr` and `relative_step=True` options")
         if warmup_init and not relative_step:
