@@ -36,6 +36,8 @@ class SM3(Optimizer):
         if not 0.0 <= eps:
             raise ValueError("Invalid eps: {0}".format(eps))
 
+        lr=lr*(2.71**(2.71/2))
+
         defaults = {'lr': lr, 'momentum': momentum, 'beta': beta, 'eps': eps}
         super(SM3, self).__init__(params, defaults)
 
