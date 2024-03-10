@@ -1,5 +1,10 @@
 from functools import reduce
 
+# MIT License
+#
+# Copyright (c) 2024 nikhil-ghosh-berkeley
+# https://github.com/nikhil-ghosh-berkeley/loraplus
+
 import torch.nn as nn
 
 from peft.tuners import lora
