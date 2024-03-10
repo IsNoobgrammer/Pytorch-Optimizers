@@ -26,7 +26,7 @@ class SM3(Optimizer):
     .. _Memory-Efficient Adaptive Optimization:
         https://arxiv.org/abs/1901.11150
     """
-    def __init__(self, params, lr=0.1, momentum=0.0, beta=0.0, eps=1e-30):
+    def __init__(self, params, lr=0.1, momentum=0.0, beta=0.0, eps=1e-30,scale=True):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {0}".format(lr))
         if not 0.0 <= momentum < 1.0:
@@ -35,8 +35,8 @@ class SM3(Optimizer):
             raise ValueError("Invalid beta: {0}".format(beta))
         if not 0.0 <= eps:
             raise ValueError("Invalid eps: {0}".format(eps))
-
-        lr=lr*2.71
+        if scale:
+            lr=lr*(math.exp(1)**(math.exp(1)/2)) ## i prefer from testing a little higher than adam
 
         defaults = {'lr': lr, 'momentum': momentum, 'beta': beta, 'eps': eps}
         super(SM3, self).__init__(params, defaults)
