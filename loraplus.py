@@ -34,7 +34,7 @@ def create_loraplus_params(
     opt_model,
 #     optimizer_cls,
     optimizer_kwargs,
-    lr_ratio=1.314,
+    lr_ratio=2**4, #according to authors
     lr_embedding=None,
 ):
     """
@@ -53,7 +53,7 @@ def create_loraplus_params(
     update_params=create_loraplus_params(
     model,
     optimizer_kwargs={'lr':1e-5},
-    lr_ratio=3,
+    lr_ratio=2**4,
     lr_embedding=2e-6,
     )
 
