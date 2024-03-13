@@ -36,6 +36,7 @@ def create_loraplus_params(
     optimizer_kwargs,
     lr_ratio=2**4, #according to authors
     lr_embedding=None,
+    lr_magnitude=None,
 ):
     """
     Creates an params_group for the given model, applying LoRA-specific learning rate adjustments to different parameter groups.
@@ -45,6 +46,7 @@ def create_loraplus_params(
         optimizer_kwargs (dict): A dictionary of keyword arguments for the optimizer's initialization.
         lr_ratio (float): The learning rate ratio to be applied to LoRA parameters.
         lr_embedding (float, optional): A specific learning rate for embedding parameters, with a default value if not provided.
+        lr_magnitude (float, optional): If using DoRA , learning rate for magnitude parameters.
     
     Returns:
         List of Params that needs to be updated
@@ -65,7 +67,9 @@ def create_loraplus_params(
 
     if lr_embedding is None:
         lr_embedding = 1e-6
-
+    if lr_magnitude is None:
+        lr_magnitude = optimizer_kwargs['lr']
+    
     decay_parameters = get_parameter_names(opt_model, ALL_LAYERNORM_LAYERS)
     decay_parameters = [name for name in decay_parameters if "bias" not in name]
     param_groups = {
@@ -73,6 +77,7 @@ def create_loraplus_params(
         "groupB": {},
         "groupB_no_decay": {},
         "embedding": {},
+        "magnitude": {},
     }
 
     for name, param in opt_model.named_parameters():
@@ -87,6 +92,8 @@ def create_loraplus_params(
                 param_groups["groupB"][name] = param
             else:
                 param_groups["groupB_no_decay"][name] = param
+        elif "lora_magnitude_vector" in name:
+            param_groups["magnitude"][name] = param
         else:
             param_groups["groupA"][name] = param
 
@@ -103,6 +110,11 @@ def create_loraplus_params(
             "params": list(param_groups["groupA"].values()),
             "weight_decay": weight_decay,
             "lr": lr,
+        },
+        {
+            "params": list(param_groups["magnitude"].values()),
+            "weight_decay": weight_decay,
+            "lr": lr_magnitude,
         },
         {
             "params": list(param_groups["embedding"].values()),
