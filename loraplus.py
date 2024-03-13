@@ -107,14 +107,14 @@ def create_loraplus_params(
 
     optimizer_grouped_parameters = [
         {
-            "params": list(param_groups["groupA"].values()),
-            "weight_decay": weight_decay,
-            "lr": lr,
-        },
-        {
             "params": list(param_groups["magnitude"].values()),
             "weight_decay": weight_decay,
             "lr": lr_magnitude,
+        },
+        {
+            "params": list(param_groups["groupA"].values()),
+            "weight_decay": weight_decay,
+            "lr": lr,
         },
         {
             "params": list(param_groups["embedding"].values()),
