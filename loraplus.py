@@ -87,13 +87,15 @@ def create_loraplus_params(
         module = get_module(name, opt_model)
         if isinstance(module, lora.Embedding):
             param_groups["embedding"][name] = param
+            
+        elif "lora_magnitude_vector" in name:
+            param_groups["magnitude"][name] = param
+            
         elif "lora_B" in name or param.ndim == 1:
             if name in decay_parameters:
                 param_groups["groupB"][name] = param
             else:
                 param_groups["groupB_no_decay"][name] = param
-        elif "lora_magnitude_vector" in name:
-            param_groups["magnitude"][name] = param
         else:
             param_groups["groupA"][name] = param
 
