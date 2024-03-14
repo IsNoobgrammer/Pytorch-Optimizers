@@ -36,7 +36,7 @@ class SM3(Optimizer):
         if not 0.0 <= eps:
             raise ValueError("Invalid eps: {0}".format(eps))
         if scale:
-            lr=lr*(math.exp(1)**(math.exp(1)/2)) ## i prefer from testing a little higher than adam
+            # lr=lr*(math.exp(1)**(math.exp(1)/2)) ## i prefer from testing a little higher than adam
 
         defaults = {'lr': lr, 'momentum': momentum, 'beta': beta, 'eps': eps}
         super(SM3, self).__init__(params, defaults)
