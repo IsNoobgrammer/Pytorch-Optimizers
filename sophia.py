@@ -22,7 +22,6 @@ optimizer= Sophia(model.parameters(),
 
 """
 
-import torch 
 
 class Sophia(torch.optim.Optimizer):
     def __init__(self, model, input_data, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, k=10, estimator="Hutchinson", rho=1):
