@@ -135,6 +135,10 @@ def create_loraplus_params(
         },
     ]
 
+    if optimizer_grouped_parameters[0]["params"] == []:
+        optimizer_grouped_parameters.pop(0)
+        
+
 #     optimizer = optimizer_cls(optimizer_grouped_parameters, **optimizer_kwargs)
 
     return optimizer_grouped_parameters ## return updated params with specific weight decay
