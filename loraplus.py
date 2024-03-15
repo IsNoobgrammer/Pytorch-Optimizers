@@ -135,8 +135,9 @@ def create_loraplus_params(
         },
     ]
 
-    if optimizer_grouped_parameters[0]["params"] == []:
-        optimizer_grouped_parameters.pop(0)
+    for i,v in enumerate(optimizer_grouped_parameters):
+            if len(v["params"]) == 0:
+                optimizer_grouped_parameters.pop(i)
         
 
 #     optimizer = optimizer_cls(optimizer_grouped_parameters, **optimizer_kwargs)
