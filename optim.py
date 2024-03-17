@@ -26,7 +26,7 @@ class SM3(Optimizer):
     .. _Memory-Efficient Adaptive Optimization:
         https://arxiv.org/abs/1901.11150
     """
-    def __init__(self, params, lr=0.1, momentum=0.0, beta=0.0, eps=1e-30,scale=True):
+    def __init__(self, params, lr=0.1, momentum=0.0, beta=0.0, eps=1e-8,scale=True):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {0}".format(lr))
         if not 0.0 <= momentum < 1.0:
